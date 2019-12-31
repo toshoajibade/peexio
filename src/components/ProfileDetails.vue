@@ -5,11 +5,10 @@
 </template>
 
 <script>
-  export default {
-    name: 'ProfileDetails'
-  }
+export default {
+  name: 'ProfileDetails'
+}
 </script>
 
 <style lang="scss" scoped>
-
 </style>

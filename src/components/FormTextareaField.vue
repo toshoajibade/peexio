@@ -73,7 +73,6 @@ export default {
   margin-bottom: 1.5rem;
   position: relative;
   width: 100%;
-
 }
 .input-inner-wrapper {
   width: 100%;

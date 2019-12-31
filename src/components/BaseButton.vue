@@ -10,16 +10,16 @@
 
 <script>
 export default {
-  name: "BaseButton",
+  name: 'BaseButton',
   props: {
     btnAction: {
       type: String,
-      default: "",
+      default: '',
       required: true
     },
     text: {
       type: String,
-      default: "",
+      default: '',
       required: true
     },
     isDisabled: {
@@ -29,11 +29,11 @@ export default {
     },
     type: {
       type: String,
-      default: "primary",
+      default: 'primary',
       required: false
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

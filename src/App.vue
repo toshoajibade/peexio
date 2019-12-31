@@ -9,14 +9,14 @@
 </template>
 
 <script>
-import NavigationBar from "@/components/NavigationBar";
-import FooterBar from "@/components/FooterBar";
-import MessagePhotographer from "@/components/MessagePhotographer";
-import BookAppointment from "@/components/BookAppointment";
-import { mapState } from "vuex";
+import NavigationBar from '@/components/NavigationBar'
+import FooterBar from '@/components/FooterBar'
+import MessagePhotographer from '@/components/MessagePhotographer'
+import BookAppointment from '@/components/BookAppointment'
+import { mapState } from 'vuex'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     NavigationBar,
     MessagePhotographer,
@@ -26,7 +26,7 @@ export default {
   computed: {
     ...mapState(['showMessagePhotographer', 'showBookAppointment'])
   }
-};
+}
 </script>
 
 <style lang="scss">

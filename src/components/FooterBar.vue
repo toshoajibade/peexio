@@ -3,10 +3,7 @@
     <div class="footer-top">
       <div>
         <h4>Quick Links</h4>
-        <div
-          v-for="(quicklink, index) in quicklinks"
-          :key="index"
-        >
+        <div v-for="(quicklink, index) in quicklinks" :key="index">
           <router-link :to="quicklink.to">
             {{ quicklink.text }}
           </router-link>
@@ -14,10 +11,7 @@
       </div>
       <div>
         <h4>Company</h4>
-        <div
-          v-for="(companyLink, index) in companyLinks"
-          :key="index"
-        >
+        <div v-for="(companyLink, index) in companyLinks" :key="index">
           <router-link :to="companyLink.to">
             {{ companyLink.text }}
           </router-link>
@@ -41,60 +35,60 @@
 
 <script>
 export default {
-  name: "FooterBar",
+  name: 'FooterBar',
   data() {
     return {
       quicklinks: [
         {
-          to: "/",
-          text: "Find a photographer"
+          to: '/',
+          text: 'Find a photographer'
         },
         {
-          to: "/",
-          text: "Find my photos"
+          to: '/',
+          text: 'Find my photos'
         },
         {
-          to: "/",
-          text: "Peexoomemories"
+          to: '/',
+          text: 'Peexoomemories'
         },
         {
-          to: "/",
-          text: "Become a photographer"
+          to: '/',
+          text: 'Become a photographer'
         }
       ],
       companyLinks: [
         {
-          to: "/",
-          text: "About Us"
+          to: '/',
+          text: 'About Us'
         },
         {
-          to: "/",
-          text: "FAQs"
+          to: '/',
+          text: 'FAQs'
         },
         {
-          to: "/",
-          text: "Pricing"
+          to: '/',
+          text: 'Pricing'
         },
         {
-          to: "/",
-          text: "Careers"
+          to: '/',
+          text: 'Careers'
         },
         {
-          to: "/",
-          text: "Help and Support"
+          to: '/',
+          text: 'Help and Support'
         },
         {
-          to: "/",
-          text: "Terms of Service"
+          to: '/',
+          text: 'Terms of Service'
         },
         {
-          to: "/",
-          text: "Privacy Policy"
+          to: '/',
+          text: 'Privacy Policy'
         }
       ]
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -103,6 +97,11 @@ export default {
   width: 100%;
   justify-content: space-between;
   padding: 2rem 12%;
+  p,
+  a {
+    font-size: 12px;
+    line-height: 200%;
+  }
 }
 .base {
   width: 100%;

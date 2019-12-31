@@ -8,6 +8,14 @@
         placeholder=""
         :error-message="errorMessages.name"
       />
+      <input-field
+        v-model="state.email"
+        name="email"
+        type="email"
+        label="Email"
+        placeholder=""
+        :error-message="errorMessages.email"
+      />
       <textarea-field
         v-model="state.message"
         name="message"
@@ -34,11 +42,13 @@ export default {
     return {
       state: {
         name: '',
-        message: ''
+        message: '',
+        email: ''
       },
       errorMessages: {
         name: '',
-        message: ''
+        message: '',
+        email: ''
       }
     }
   },
@@ -54,6 +64,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

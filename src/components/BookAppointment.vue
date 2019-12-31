@@ -1,12 +1,26 @@
 <template>
   <overlay-wrapper>
-    <form class="modal" v-click-outside="hideModal">
+    <form
+      v-click-outside="hideModal"
+      class="modal"
+    >
+      <h4 class="form-header">
+        Schedule Appointment for {{ readableAppointment }}?
+      </h4>
       <input-field
         v-model="state.name"
         name="name"
         label="Full Name"
         placeholder=""
         :error-message="errorMessages.name"
+      />
+      <input-field
+        v-model="state.email"
+        name="email"
+        type="email"
+        label="Email"
+        placeholder=""
+        :error-message="errorMessages.email"
       />
       <base-button
         text="Confirm"
@@ -18,18 +32,27 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
+import { format } from 'date-fns'
 
 export default {
   name: 'BookAppointment',
   data() {
     return {
       state: {
-        name: ''
+        name: '',
+        email: ''
       },
       errorMessages: {
-        name: ''
+        name: '',
+        email: ''
       }
+    }
+  },
+  computed: {
+    ...mapState(['appointmentDate']),
+    readableAppointment() {
+      return format(new Date(this.appointmentDate), 'MMM do, yyyy')
     }
   },
   methods: {
@@ -44,4 +67,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.form-header {
+  margin-bottom: 1rem;
+}
+</style>

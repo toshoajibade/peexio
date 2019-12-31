@@ -1,8 +1,14 @@
 <template>
   <div class="calender">
     <div class="profile-details">
-      <div class="profile-name">
-        <p>After Shorts</p>
+      <div class="profile-name flex">
+        <h3>{{ user.name }}</h3>
+        <img
+          v-if="user.isVerified"
+          class="icon"
+          src="@/assets/icons/verified_user-24px.svg"
+          alt=""
+        >
       </div>
       <div class="action-buttons">
         <base-button
@@ -45,8 +51,8 @@
             <div
               v-for="(date, j) in weeks"
               :key="j"
-              :class="[date ? 'date' : '', date && selectedDate === date ? 'selected-date' : '']"
-              @click.stop="selectedDate = date"
+              :class="[date ? 'date' : '', date && appointmentDate === date ? 'selected-date' : '']"
+              @click.stop="handleAppointmentDate(date)"
             >
               <p>{{ getReadableDate(date) }}</p>
             </div>
@@ -61,6 +67,7 @@
           alt="previous"
         >
       </div>
+      <div class="circle" />
       <div @click.stop="goToNext">
         <img
           src="@/assets/icons/navigate_next-24px.svg"
@@ -81,106 +88,123 @@ import {
   endOfMonth,
   format,
   subMonths
-} from "date-fns";
-import { mapMutations } from "vuex";
+} from 'date-fns'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
-  name: "MonthCalender",
+  name: 'MonthCalender',
   data() {
     return {
       startDate: 0,
       startMonth: 0,
-      selectedDate: 0,
-      days: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+      days: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
       months: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
       ],
       dates: [],
       events: []
-    };
+    }
   },
   computed: {
+    ...mapState(['appointmentDate', 'user']),
     nextMonth() {
-      return this.startMonth + 1 > 11 ? this.startMonth - 11 : this.startMonth + 1;
+      return this.startMonth + 1 > 11
+        ? this.startMonth - 11
+        : this.startMonth + 1
     },
     next2Month() {
-      return this.startMonth + 2 > 11 ? this.startMonth + 1 - 11 : this.startMonth + 2;
+      return this.startMonth + 2 > 11
+        ? this.startMonth + 1 - 11
+        : this.startMonth + 2
     },
     monthsDisplayed() {
       return [
         this.months[this.startMonth],
         this.months[this.nextMonth],
         this.months[this.next2Month]
-      ];
+      ]
     }
   },
   created() {
-    this.startMonth = getMonth(Date.now());
-    this.startDate = Date.now();
-    this.calcDates();
+    this.startMonth = getMonth(Date.now())
+    this.startDate = Date.now()
+    this.handleAppointmentDate(Date.now())
+    this.calcDates()
   },
   methods: {
-    ...mapMutations(["handleMessagePhotographer", "handleBookAppointment"]),
+    ...mapMutations([
+      'handleMessagePhotographer',
+      'handleBookAppointment',
+      'handleAppointmentDate'
+    ]),
     goToPrev() {
-      this.startMonth = this.startMonth === 0 ? 11 : this.startMonth - 1;
-      this.startDate = getTime(subMonths(this.startDate, 1));
-      this.calcDates();
+      this.startMonth = this.startMonth === 0 ? 11 : this.startMonth - 1
+      this.startDate = getTime(subMonths(this.startDate, 1))
+      this.calcDates()
     },
     goToNext() {
-      this.startMonth = this.startMonth + 1 > 11 ? 0 : this.startMonth + 1;
-      this.startDate = getTime(addMonths(this.startDate, 1));
-      this.calcDates();
+      this.startMonth = this.startMonth + 1 > 11 ? 0 : this.startMonth + 1
+      this.startDate = getTime(addMonths(this.startDate, 1))
+      this.calcDates()
     },
 
     calcDates() {
       // Number of seconds in a day
-      const numMilliSecondsInDay = 86400000;
-      const numMilliSecondsInWeek = 604800000;
-      const calenderStart = getTime(startOfMonth(this.startDate));
-      let monthArr = [];
-      let numOfMonthsToShow = 3;
+      const numMilliSecondsInDay = 86400000
+      const numMilliSecondsInWeek = 604800000
+      const calenderStart = getTime(startOfMonth(this.startDate))
+      let monthArr = []
+      let numOfMonthsToShow = 3
       for (let k = 0; k < numOfMonthsToShow; k++) {
-        const monthStart = getTime(addMonths(startOfMonth(calenderStart), k));
-        const monthEnd = getTime(endOfMonth(monthStart));
-        const numWeeksInMonth = Math.ceil((monthEnd - monthStart) / numMilliSecondsInWeek);
-        let arr = [];
+        const monthStart = getTime(addMonths(startOfMonth(calenderStart), k))
+        const monthEnd = getTime(endOfMonth(monthStart))
+        const numWeeksInMonth = Math.ceil(
+          (monthEnd - monthStart) / numMilliSecondsInWeek
+        )
+        let arr = []
         for (let i = 0; i < numWeeksInMonth; i++) {
-          let weekArr = [];
-          let weekStart = getTime(startOfWeek(monthStart + i * numMilliSecondsInWeek));
+          let weekArr = []
+          let weekStart = getTime(
+            startOfWeek(monthStart + i * numMilliSecondsInWeek)
+          )
           for (let j = 0; j < 7; j++) {
-            let dayStart = weekStart + j * numMilliSecondsInDay;
-            if (dayStart >= weekStart && dayStart < monthEnd && dayStart >= monthStart) {
-              weekArr.push(dayStart);
+            let dayStart = weekStart + j * numMilliSecondsInDay
+            if (
+              dayStart >= weekStart &&
+              dayStart < monthEnd &&
+              dayStart >= monthStart
+            ) {
+              weekArr.push(dayStart)
             } else {
-              weekArr.push("");
+              weekArr.push('')
             }
           }
-          arr.push(weekArr);
+          arr.push(weekArr)
         }
-        monthArr.push(arr);
+        monthArr.push(arr)
       }
-      this.dates = monthArr;
+      this.dates = monthArr
     },
     getReadableDate(date) {
       if (date) {
-        return format(new Date(date), "d");
+        return format(new Date(date), 'd')
       } else {
-        return "";
+        return ''
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -253,13 +277,27 @@ p {
     }
   }
 }
+.profile-name {
+  > *:first-child {
+    margin-right: 0.5rem;
+  }
+}
 .controls {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 0.5rem;
   > div {
+    margin: 0rem 0.25rem;
     padding: 0.5rem;
     cursor: pointer;
+  }
+  .circle {
+    width: 1rem;
+    background-color: $font-color;
+    border-radius: 50%;
+    height: 1rem;
+    cursor: default;
   }
 }
 </style>

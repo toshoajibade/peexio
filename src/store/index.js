@@ -6,7 +6,12 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     showMessagePhotographer: false,
-    showBookAppointment: false
+    showBookAppointment: false,
+    appointmentDate: 0,
+    user: { /** Normally this data should come from the api */
+      name: 'Afroshots',
+      isVerified: true
+    }
   },
   mutations: {
     handleMessagePhotographer(store, payload) {
@@ -14,6 +19,9 @@ export default new Vuex.Store({
     },
     handleBookAppointment(store, payload) {
       this.state.showBookAppointment = payload
+    },
+    handleAppointmentDate(store, payload) {
+      this.state.appointmentDate = payload
     }
   },
   actions: {

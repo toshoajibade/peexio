@@ -53,7 +53,7 @@ export default {
       type: [String, Number, Array],
       required: false,
       default: ''
-    },
+    }
   },
   data() {
     return {
@@ -109,5 +109,4 @@ input {
     color: #a3a3a3;
   }
 }
-
 </style>

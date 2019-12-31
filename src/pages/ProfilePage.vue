@@ -16,7 +16,7 @@
         <div
           v-for="(content, index) in contents"
           :key="index"
-          class="content-nav-item"
+          :class="['content-nav-item', content.component === selectedContent ? 'selected': '']"
         >
           <p @click.stop="changeContent(content)">
             {{ content.text }}
@@ -31,14 +31,14 @@
 </template>
 
 <script>
-import Availability from "@/components/ProfileAvailability";
-import Details from "@/components/ProfileDetails";
-import Portfolio from "@/components/ProfilePortfolio";
-import Pricing from "@/components/ProfilePricing";
-import Reviews from "@/components/ProfileReviews";
+import Availability from '@/components/ProfileAvailability'
+import Details from '@/components/ProfileDetails'
+import Portfolio from '@/components/ProfilePortfolio'
+import Pricing from '@/components/ProfilePricing'
+import Reviews from '@/components/ProfileReviews'
 
 export default {
-  name: "ProfilePage",
+  name: 'ProfilePage',
   components: {
     Availability,
     Details,
@@ -48,37 +48,37 @@ export default {
   },
   data() {
     return {
-      selectedContent: "Availability",
+      selectedContent: 'Availability',
       contents: [
         {
-          component: "Details",
-          text: "Details"
+          component: 'Details',
+          text: 'Details'
         },
         {
-          component: "Portfolio",
-          text: "Portfolio"
+          component: 'Portfolio',
+          text: 'Portfolio'
         },
         {
-          component: "Availability",
-          text: "Availability"
+          component: 'Availability',
+          text: 'Availability'
         },
         {
-          component: "Pricing",
-          text: "Pricing Packages"
+          component: 'Pricing',
+          text: 'Pricing Packages'
         },
         {
-          component: "Reviews",
-          text: "Reviews"
+          component: 'Reviews',
+          text: 'Reviews'
         }
       ]
-    };
+    }
   },
   methods: {
     changeContent(content) {
-      this.selectedContent = content.component;
+      this.selectedContent = content.component
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -100,9 +100,17 @@ export default {
     display: flex;
   }
   .content-nav-item {
-    padding: 0rem 1.5rem;
+    padding: 0rem 1rem;
     display: flex;
+    cursor: pointer;
     align-items: center;
+
+    &:hover {
+      background-color: rgb(116, 116, 116);
+    }
+    &.selected {
+      background-color: rgb(87, 87, 87);
+    }
   }
 }
 .profile-image {
@@ -116,7 +124,7 @@ export default {
   }
 }
 .contents {
-  padding: 6rem;
+  padding: 3rem 6rem;
   background-color: $primary-color-light;
 }
 </style>

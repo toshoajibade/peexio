@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import MonthCalender from "@/components/MonthCalender";
+import MonthCalender from '@/components/MonthCalender'
 
 export default {
-  name: "ProfileAvailability",
+  name: 'ProfileAvailability',
   components: {
     MonthCalender
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

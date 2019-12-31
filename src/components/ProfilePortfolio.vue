@@ -5,11 +5,10 @@
 </template>
 
 <script>
-  export default {
-    name: 'ProfilePortfolio'
-  }
+export default {
+  name: 'ProfilePortfolio'
+}
 </script>
 
 <style lang="scss" scoped>
-
 </style>
