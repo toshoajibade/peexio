@@ -2,13 +2,13 @@
   <div class="page">
     <img
       class="cover-image"
-      src="@/assets/images/sunrise.jpg"
+      src="@/assets/images/brush.jpg"
       alt="profile cover image"
     >
     <div class="content-nav">
       <div class="profile-image">
         <img
-          src="@/assets/images/sunrise.jpg"
+          src="@/assets/images/girl.jpg"
           alt="profile cover image"
         >
       </div>
@@ -18,7 +18,9 @@
           :key="index"
           class="content-nav-item"
         >
-          <p @click.stop="changeContent(content)">{{content.text}}</p>
+          <p @click.stop="changeContent(content)">
+            {{ content.text }}
+          </p>
         </div>
       </div>
     </div>

@@ -1,0 +1,18 @@
+.scale-in-enter,
+.scale-in-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.scale-in-enter-active,
+.scale-in-leave-active {
+  transition: $default-transition;
+}
+
+.fade-in-enter,
+.fade-in-leave-to {
+  opacity: 0;
+}
+.fade-in-enter-active,
+.fade-in-leave-active {
+  transition: $default-transition;
+}

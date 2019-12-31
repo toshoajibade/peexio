@@ -7,7 +7,9 @@
           v-for="(quicklink, index) in quicklinks"
           :key="index"
         >
-          <router-link :to="quicklink.to">{{quicklink.text}}</router-link>
+          <router-link :to="quicklink.to">
+            {{ quicklink.text }}
+          </router-link>
         </div>
       </div>
       <div>
@@ -16,7 +18,9 @@
           v-for="(companyLink, index) in companyLinks"
           :key="index"
         >
-          <router-link :to="companyLink.to">{{companyLink.text}}</router-link>
+          <router-link :to="companyLink.to">
+            {{ companyLink.text }}
+          </router-link>
         </div>
       </div>
       <div>

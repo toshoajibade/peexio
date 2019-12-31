@@ -9,7 +9,9 @@
         :key="index"
         class="nav-item"
       >
-        <router-link :to=navlink.to>{{ navlink.text }}</router-link>
+        <router-link :to="navlink.to">
+          {{ navlink.text }}
+        </router-link>
       </div>
     </div>
   </div>

@@ -1,33 +1,88 @@
 <template>
   <div class="calender">
+    <div class="profile-details">
+      <div class="profile-name">
+        <p>After Shorts</p>
+      </div>
+      <div class="action-buttons">
+        <base-button
+          text="Message Photographer"
+          btn-action="messagePhotographer"
+          type="secondary"
+          @messagePhotographer="handleMessagePhotographer(true)"
+        />
+        <base-button
+          text="Book Now"
+          btn-action="bookNow"
+          type="primary"
+          @bookNow="handleBookAppointment(true)"
+        />
+      </div>
+    </div>
     <div class="months-wrapper">
-      <div v-for="(month, index) in monthsDisplayed" :key="index" class="month">
+      <div
+        v-for="(month, index) in dates"
+        :key="index"
+        class="month"
+      >
         <div class="name">
-          <p>{{ month }}</p>
+          <p>{{ monthsDisplayed[index] }}</p>
         </div>
         <div class="days">
-          <div v-for="(day, i) in days" :key="i">
+          <div
+            v-for="(day, i) in days"
+            :key="i"
+          >
             <p>{{ day }}</p>
           </div>
         </div>
-        <div>
-          
+        <div class="weeks">
+          <div
+            v-for="(weeks, idx) in month"
+            :key="idx"
+            class="days"
+          >
+            <div
+              v-for="(date, j) in weeks"
+              :key="j"
+              :class="[date ? 'date' : '', date && selectedDate === date ? 'selected-date' : '']"
+              @click.stop="selectedDate = date"
+            >
+              <p>{{ getReadableDate(date) }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="controls">
       <div @click.stop="goToPrev">
-        <img src="@/assets/icons/navigate_before-24px.svg" alt="previous" />
+        <img
+          src="@/assets/icons/navigate_before-24px.svg"
+          alt="previous"
+        >
       </div>
       <div @click.stop="goToNext">
-        <img src="@/assets/icons/navigate_next-24px.svg" alt="next" />
+        <img
+          src="@/assets/icons/navigate_next-24px.svg"
+          alt="next"
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getMonth, startOfMonth, addMonths, startOfWeek, getTime, endOfMonth } from "date-fns";
+import {
+  getMonth,
+  startOfMonth,
+  addMonths,
+  startOfWeek,
+  getTime,
+  endOfMonth,
+  format,
+  subMonths
+} from "date-fns";
+import { mapMutations } from "vuex";
 
 export default {
   name: "MonthCalender",
@@ -35,6 +90,7 @@ export default {
     return {
       startDate: 0,
       startMonth: 0,
+      selectedDate: 0,
       days: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
       months: [
         "January",
@@ -75,15 +131,19 @@ export default {
     this.calcDates();
   },
   methods: {
-    addEvent() {},
+    ...mapMutations(["handleMessagePhotographer", "handleBookAppointment"]),
     goToPrev() {
       this.startMonth = this.startMonth === 0 ? 11 : this.startMonth - 1;
+      this.startDate = getTime(subMonths(this.startDate, 1));
+      this.calcDates();
     },
     goToNext() {
       this.startMonth = this.startMonth + 1 > 11 ? 0 : this.startMonth + 1;
+      this.startDate = getTime(addMonths(this.startDate, 1));
+      this.calcDates();
     },
+
     calcDates() {
-      // const calenderStart = getTime(startOfWeek(monthStart));
       // Number of seconds in a day
       const numMilliSecondsInDay = 86400000;
       const numMilliSecondsInWeek = 604800000;
@@ -91,7 +151,6 @@ export default {
       let monthArr = [];
       let numOfMonthsToShow = 3;
       for (let k = 0; k < numOfMonthsToShow; k++) {
-        // const numDaysInMonth = Math.ceil((monthEnd - monthStart) / numMilliSecondsInDay);
         const monthStart = getTime(addMonths(startOfMonth(calenderStart), k));
         const monthEnd = getTime(endOfMonth(monthStart));
         const numWeeksInMonth = Math.ceil((monthEnd - monthStart) / numMilliSecondsInWeek);
@@ -111,7 +170,14 @@ export default {
         }
         monthArr.push(arr);
       }
-      this.dates = monthArr
+      this.dates = monthArr;
+    },
+    getReadableDate(date) {
+      if (date) {
+        return format(new Date(date), "d");
+      } else {
+        return "";
+      }
     }
   }
 };
@@ -148,6 +214,43 @@ p {
       font-size: 12px;
     }
     justify-content: space-around;
+    > div {
+      width: 1.8rem;
+      padding: 0.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 1.8rem;
+    }
+  }
+  .weeks {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .week {
+    display: flex;
+  }
+  .date {
+    cursor: pointer;
+  }
+  .selected-date {
+    background-color: $primary-color;
+    border-radius: 50%;
+    p {
+      color: white;
+    }
+  }
+}
+.profile-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  .action-buttons {
+    display: flex;
+    > *:not(:last-child) {
+      margin-right: 1rem;
+    }
   }
 }
 .controls {

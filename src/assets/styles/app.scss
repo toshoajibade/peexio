@@ -1,9 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import 'reset';
 @import 'variables';
+@import 'transitions';
 @import 'defaults';
 
 .page {
   display: flex;
   flex-direction: column;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 400px;
 }
