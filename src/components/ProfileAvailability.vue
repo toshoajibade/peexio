@@ -1,15 +1,19 @@
 <template>
   <div>
-    <p>Availability</p>
+    <month-calender />
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'ProfileAvailability'
+import MonthCalender from "@/components/MonthCalender";
+
+export default {
+  name: "ProfileAvailability",
+  components: {
+    MonthCalender
   }
+};
 </script>
 
 <style lang="scss" scoped>
-
 </style>
